@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/react-mesto-auth/static/css/main.510994ed.css",
+    "main.js": "/react-mesto-auth/static/js/main.39643b50.js",
+    "static/js/787.2df4b1c8.chunk.js": "/react-mesto-auth/static/js/787.2df4b1c8.chunk.js",
+    "static/media/Inter-Medium.woff": "/react-mesto-auth/static/media/Inter-Medium.9053572c46aeb4b16caa.woff",
+    "static/media/Inter-Black.woff": "/react-mesto-auth/static/media/Inter-Black.c6938660eec019fefd68.woff",
+    "static/media/Inter-Regular.woff": "/react-mesto-auth/static/media/Inter-Regular.8c206db99195777c6769.woff",
+    "static/media/Inter-Medium.woff2": "/react-mesto-auth/static/media/Inter-Medium.293fd13dbca5a3e450ef.woff2",
+    "static/media/Inter-Black.woff2": "/react-mesto-auth/static/media/Inter-Black.15ca31c0a2a68f76d2d1.woff2",
+    "static/media/logo.svg": "/react-mesto-auth/static/media/logo.03b78ada3425e9132ff3.svg",
+    "index.html": "/react-mesto-auth/index.html",
+    "static/media/like.svg": "/react-mesto-auth/static/media/like.87ed371465c7a6a1cd01.svg",
+    "static/media/remove-icon.svg": "/react-mesto-auth/static/media/remove-icon.cbc09a894bdd4c956365.svg",
+    "static/media/like-active.svg": "/react-mesto-auth/static/media/like-active.fe17a515669479b1e649.svg",
+    "static/media/edit-button.svg": "/react-mesto-auth/static/media/edit-button.a1892ea72cb87c8fc3aa.svg",
+    "static/media/edit-avatar.svg": "/react-mesto-auth/static/media/edit-avatar.a086f758840ae814ecde.svg",
+    "static/media/close-icon.svg": "/react-mesto-auth/static/media/close-icon.2ceb783afbab75916ddc.svg",
+    "static/media/add-button.svg": "/react-mesto-auth/static/media/add-button.d86bb2edc2f6eadb96b7.svg",
+    "main.510994ed.css.map": "/react-mesto-auth/static/css/main.510994ed.css.map",
+    "main.39643b50.js.map": "/react-mesto-auth/static/js/main.39643b50.js.map",
+    "787.2df4b1c8.chunk.js.map": "/react-mesto-auth/static/js/787.2df4b1c8.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.510994ed.css",
+    "static/js/main.39643b50.js"
+  ]
+}
