@@ -13,5 +13,5 @@ export default function useForm(inputValues) {
       [name]: { value, isValid: valid, error: validationMessage },
     }));
   }
-  return [values, setValues, handleChange];
+  return { values, setValues, handleChange };
 }
