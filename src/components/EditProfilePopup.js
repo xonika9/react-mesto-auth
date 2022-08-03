@@ -25,7 +25,7 @@ function EditProfilePopup({
     }),
     [currentUser]
   );
-  const [values, setValues, handleChange] = useForm(initialFormValues);
+  const { values, setValues, handleChange } = useForm(initialFormValues);
   useEffect(() => {
     setValues(initialFormValues);
   }, [isOpen, setValues, initialFormValues]);
