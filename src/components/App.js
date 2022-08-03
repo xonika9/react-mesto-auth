@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -9,7 +10,16 @@ import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 import ConfirmationPopup from './ConfirmationPopup';
+import * as auth from '../utils/auth.js';
+import InfoTooltip from './InfoTooltip';
+import ProtectedRoute from './ProtectedRoute';
+import Login from './Login';
+import Register from './Register';
+import successIcon from '../images/successful-login.svg';
+import failIcon from '../images/registration-error.svg';
 function App() {
+  const history = useHistory();
+  const [loggedIn, setLoggedIn] = useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
@@ -18,14 +28,19 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [registrationMessage, setRegisterMessage] = useState(null);
+  const [userEmail, setUserEmail] = useState('');
   useEffect(() => {
+    if (!loggedIn) {
+      return;
+    }
     Promise.all([api.getUserInfo(), api.getInitialCards()])
       .then(([userData, cards]) => {
         setCurrentUser(userData);
         setCards(cards);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [loggedIn]);
   const handleEditAvatarClick = () => setIsEditAvatarPopupOpen(true);
   const handleEditProfileClick = () => setIsEditProfilePopupOpen(true);
   const handleAddPlaceClick = () => setIsAddPlacePopupOpen(true);
@@ -35,6 +50,7 @@ function App() {
     setIsAddPlacePopupOpen(false);
     setSelectedCard(false);
     setCardToDelete(null);
+    setRegisterMessage(null);
   };
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
@@ -117,20 +133,92 @@ function App() {
       })
       .catch((err) => console.log(err));
   };
+  function handleRegister({ email, password }) {
+    auth
+      .registration({ email, password })
+      .then((res) => {
+        setRegisterMessage({
+          icon: successIcon,
+          text: 'Вы успешно зарегистрировались!',
+        });
+        history.push('/sign-in');
+      })
+      .catch((err) => {
+        setRegisterMessage({
+          icon: failIcon,
+          text: 'Что-то пошло не так! Попробуйте ещё раз.',
+        });
+        console.log(err);
+      });
+  }
+  function handleLogin({ email, password }) {
+    auth
+      .authorize({ email, password })
+      .then((data) => {
+        localStorage.setItem('token', data.token);
+        setLoggedIn(true);
+        setUserEmail(email);
+        console.log(loggedIn);
+        history.push('/');
+      })
+      .catch((err) => {
+        setRegisterMessage({
+          icon: failIcon,
+          text: 'Что-то пошло не так! Попробуйте ещё раз.',
+        });
+        console.log(err);
+      });
+  }
+  function handleLogout() {
+    localStorage.removeItem('token');
+    history.push('/sign-in');
+  }
+  const checkToken = useCallback(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return;
+    }
+    auth
+      .getContent(token)
+      .then((res) => {
+        setLoggedIn(true);
+        setUserEmail(res.data.email);
+        history.push('/');
+      })
+      .catch((err) => console.log(err));
+  }, [history]);
+  useEffect(() => {
+    checkToken();
+  }, [checkToken]);
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className='page'>
         <div className='page__container'>
-          <Header />
-          <Main
-            onEditAvatar={handleEditAvatarClick}
-            onEditProfile={handleEditProfileClick}
-            onAddPlace={handleAddPlaceClick}
-            onCardClick={handleCardClick}
-            cards={cards}
-            onCardLike={handleCardLike}
-            onCardDelete={handleCardDelete}
-          />
+          <Header email={userEmail} onLogout={handleLogout} />
+          <Switch>
+            <ProtectedRoute
+              exact
+              path='/'
+              component={Main}
+              loggedIn={loggedIn}
+              onAddPlace={handleAddPlaceClick}
+              onEditAvatar={handleEditAvatarClick}
+              onEditProfile={handleEditProfileClick}
+              onCardClick={handleCardClick}
+              cards={cards}
+              onCardLike={handleCardLike}
+              onCardDelete={handleCardDelete}
+            />
+            <Route path='/sign-up'>
+              <Register onRegister={handleRegister} />
+            </Route>
+            <Route path='/sign-in'>
+              <Login onLogin={handleLogin} />
+            </Route>
+            <Route path='*'>
+              {loggedIn ? <Redirect to='/' /> : <Redirect to='/sign-in' />}
+            </Route>
+          </Switch>
           <Footer />
           <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
@@ -162,6 +250,11 @@ function App() {
           />
           <ImagePopup
             card={selectedCard}
+            onClose={closeAllPopups}
+            onOverlay={handleOverlayClick}
+          />
+          <InfoTooltip
+            message={registrationMessage}
             onClose={closeAllPopups}
             onOverlay={handleOverlayClick}
           />
