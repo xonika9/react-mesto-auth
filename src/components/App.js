@@ -57,6 +57,24 @@ function App() {
       closeAllPopups();
     }
   };
+  const isOpened =
+    isEditProfilePopupOpen ||
+    isAddPlacePopupOpen ||
+    isEditAvatarPopupOpen ||
+    selectedCard;
+  useEffect(() => {
+    const handleEscClose = (e) => {
+      if (e.key === 'Escape') {
+        closeAllPopups();
+      }
+    };
+    if (isOpened) {
+      document.addEventListener('keydown', handleEscClose);
+      return () => {
+        document.removeEventListener('keydown', handleEscClose);
+      };
+    }
+  }, [isOpened]);
   const handleUpdateUser = ({ name, about }) => {
     setIsLoading(true);
     api
