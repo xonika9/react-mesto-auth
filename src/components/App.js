@@ -15,8 +15,8 @@ import InfoTooltip from './InfoTooltip';
 import ProtectedRoute from './ProtectedRoute';
 import Login from './Login';
 import Register from './Register';
-import successIcon from '../images/successful-login.svg';
-import failIcon from '../images/registration-error.svg';
+import successIcon from '../images/successful.svg';
+import failIcon from '../images/failed.svg';
 function App() {
   const history = useHistory();
   const [loggedIn, setLoggedIn] = useState(false);
