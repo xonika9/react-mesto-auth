@@ -1,20 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useMemo, useEffect } from 'react';
 import PopupWithForm from './PopupWithForm';
+import useForm from '../hooks/useForm';
 function AddPlacePopup({ isOpen, onClose, onOverlay, onAddPlace, isLoading }) {
-  const [formValues, setFormValues] = useState({
-    title: {
-      value: '',
-      error: '',
-      isValid: true,
-    },
-    link: {
-      value: '',
-      error: '',
-      isValid: true,
-    },
-  });
-  useEffect(() => {
-    setFormValues({
+  const initialFormValues = useMemo(
+    () => ({
       title: {
         value: '',
         error: '',
@@ -25,23 +14,16 @@ function AddPlacePopup({ isOpen, onClose, onOverlay, onAddPlace, isLoading }) {
         error: '',
         isValid: true,
       },
-    });
-  }, [isOpen]);
-  function handleChange(e) {
-    const {
-      name,
-      value,
-      validity: { valid },
-      validationMessage,
-    } = e.target;
-    setFormValues((prevState) => ({
-      ...prevState,
-      [name]: { value, isValid: valid, error: validationMessage },
-    }));
-  }
+    }),
+    []
+  );
+  const { values, setValues, handleChange } = useForm(initialFormValues);
+  useEffect(() => {
+    setValues(initialFormValues);
+  }, [isOpen, setValues, initialFormValues]);
   function handleSubmit(e) {
     e.preventDefault();
-    onAddPlace({ title: formValues.title.value, link: formValues.link.value });
+    onAddPlace({ title: values.title.value, link: values.link.value });
   }
   return (
     <PopupWithForm
@@ -52,12 +34,17 @@ function AddPlacePopup({ isOpen, onClose, onOverlay, onAddPlace, isLoading }) {
       isOpened={isOpen}
       onSubmit={handleSubmit}
       isLoading={isLoading}
-      isValid={formValues.title.isValid && formValues.link.isValid}
+      isValid={
+        values.title.isValid &&
+        values.link.isValid &&
+        values.title.value &&
+        values.link.value
+      }
       onOverlay={onOverlay}
     >
       <input
         className={`popup__input popup__input_type_card-title ${
-          !formValues.title.isValid && 'popup__input_type_error'
+          !values.title.isValid && 'popup__input_type_error'
         }`}
         type='text'
         name='title'
@@ -67,18 +54,18 @@ function AddPlacePopup({ isOpen, onClose, onOverlay, onAddPlace, isLoading }) {
         maxLength='30'
         id='title-input'
         onChange={handleChange}
-        value={formValues.title.value}
+        value={values.title.value}
       />
       <span
         className={`popup__error title-input-error ${
-          !formValues.title.isValid && 'popup__error_visible'
+          !values.title.isValid && 'popup__error_visible'
         }`}
       >
-        {formValues.title.error}
+        {values.title.error}
       </span>
       <input
         className={`popup__input popup__input_type_image-link ${
-          !formValues.link.isValid && 'popup__input_type_error'
+          !values.link.isValid && 'popup__input_type_error'
         }`}
         type='url'
         name='link'
@@ -86,14 +73,14 @@ function AddPlacePopup({ isOpen, onClose, onOverlay, onAddPlace, isLoading }) {
         required
         id='link-input'
         onChange={handleChange}
-        value={formValues.link.value}
+        value={values.link.value}
       />
       <span
         className={`popup__error link-input-error ${
-          !formValues.link.isValid && 'popup__error_visible'
+          !values.link.isValid && 'popup__error_visible'
         }`}
       >
-        {formValues.link.error}
+        {values.link.error}
       </span>
     </PopupWithForm>
   );

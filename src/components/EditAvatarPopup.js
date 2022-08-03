@@ -41,7 +41,7 @@ function EditAvatarPopup({
     >
       <input
         className={`popup__input popup__input_type_avatar-link ${
-          !isInputValid && 'popup__input_invalid'
+          !isInputValid && 'popup__input_type_error'
         }`}
         type='url'
         name='avatar'

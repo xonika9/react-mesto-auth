@@ -10,7 +10,7 @@ function ImagePopup({ card, onClose, onOverlay }) {
           type='button'
           aria-label='Закрыть'
           onClick={onClose}
-        ></button>
+        />
         <figure className='popup__figure'>
           <img className='popup__image' src={card.src} alt={card.title} />
           <figcaption className='popup__caption'>{card.title}</figcaption>
