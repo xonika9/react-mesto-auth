@@ -38,8 +38,28 @@ Mesto - интерактивная страница, куда можно доб�
 Ссылка на [GitHub Pages](https://xonika9.github.io/react-mesto-auth/)
 
 ***
+### Установка
 
-Инструкция по запуску:
-1. Должны быть установлены node.js и npm
-2. Склонируйте репозиторий `git clone`
-3. Перейдите в папку с проектом и введите в терминале `npm start`
+```bash
+# Clone the repository
+git clone https://github.com/xonika9/react-mesto-auth.git
+
+# Enter the project directory
+cd react-mesto-auth
+
+# Install dependencies
+npm i
+```
+
+### Скрипты
+
+```bash
+# Run a local server at localhost:3000
+npm start
+
+# Builds the app for production at the `build` folder
+npm build
+
+# Places the production version code into the `gh-pages` branch
+npm deploy
+```
