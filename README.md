@@ -1,10 +1,10 @@
 # Mesto
 
-Mesto - интерактивная страница, куда можно добавлять фотографии, удалять их и ставить лайки.
+Mesto is an interactive page where you can add photos, delete and like them.
 
 ***
 
-## Стек
+## Stack
 
 * HTML
 * CSS
@@ -13,32 +13,30 @@ Mesto - интерактивная страница, куда можно доб�
 * Webpack
 * Babel
 
-## Реализация
+## Implementation
 
-* Flexbox, Grid
-* CSS анимация
-* Адаптивность для различной ширины окна браузера
-* Оптимизация изображений
-* Оптимизация шрифтов под устройства с различными разрешениями
-* Методология БЭМ, файловая структура БЭМ Nested
-* Сборка с помощью create-react-app
-* Использование JavaScript:
-  * Объектно-ориентированный код
-  * Работа с API
-  * Регистрация и авторизация пользователя
-  * Получение карточек с сервера и их рендер на страницу
-  * Создание, удаление карточек
-  * Получение информации о пользователе и аватара с сервера
-  * Изменение информации пользователя и аватара
-  * Открытие/закрытие модального окна с изображением
-  * Валидация форм
-  * Получение информации о количестве лайков с сервера
-  * Счетчик лайков
+* Adaptability for different browser window widths
+* Optimization of images
+* Font optimization for devices with different resolutions
+* BEM methodology, BEM Nested file structure
+* Build with create-react-app
+* JavaScript usage:
+  * Object-oriented code
+  * API handling
+  * User registration and authorization
+  * Retrieving cards from the server and rendering them on a page
+  * Creating, deleting cards
+  * Getting user and avatar information from the server
+  * Changing user and avatar info
+  * Opening/closing a modal window with an image
+  * Validating forms
+  * Getting the likes information from the server
+  * Likes counter
 
-Ссылка на [GitHub Pages](https://xonika9.github.io/react-mesto-auth/)
+Link to [GitHub Pages](https://xonika9.github.io/react-mesto-auth/)
 
 ***
-### Установка
+### Installation
 
 ```bash
 # Clone the repository
@@ -51,7 +49,7 @@ cd react-mesto-auth
 npm i
 ```
 
-### Скрипты
+### Scripts
 
 ```bash
 # Run a local server at localhost:3000
